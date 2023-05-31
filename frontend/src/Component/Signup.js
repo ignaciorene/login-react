@@ -6,12 +6,6 @@ import {newUser} from "../reducer/userReducer";
 
 const SignUp=()=>{
 
-    const [userName,setUserName]=useState()
-    const [userAge,setUserAge]=useState()
-    const [userMail,setUserMail]=useState()
-    const [confirmUserMail,setConfirmUserMail]=useState()
-    const [userPassword,setUserPassword]=useState()
-    const [confirmUserPassword,setConfirmUserPassword]=useState()
     const [confirmSignUp,setConfirmSignUp]=useState()
 
     const [emailWarning,setEmailWarning]=useState(false)
@@ -24,7 +18,16 @@ const SignUp=()=>{
 
     const dispatch=useDispatch()
 
+    //Verifies inputs and signup user if data is valid
     const createNewUser=(e)=>{
+
+        const signupName=document.getElementById('signup-name').value
+        const signupAge=document.getElementById('signup-age').value
+        const signupEmail=document.getElementById('signup-email').value
+        const signupConfirmEmail=document.getElementById('signup-confirm-email').value
+        const signupPassword=document.getElementById('signup-password').value
+        const signupConfirmPassword=document.getElementById('signup-confirm-password').value
+
         e.preventDefault()
 
         setEmailWarning(false)
@@ -35,45 +38,42 @@ const SignUp=()=>{
         setAgeWarning(false)
         setNameWarning(false)
 
-        const passwordLength=userPassword?.length
+        const passwordLength=signupPassword?.length
 
         if(passwordLength<8 || passwordLength==null){
-            console.log('contrasena es corta')
             setPasswordWarning(true)
         }
 
-        if(userPassword!=confirmUserPassword){
-            console.log('contrasena no coincide')
+        if(signupPassword!==signupConfirmPassword){
             setMatchpasswordWarning(true)
         }
 
-        if(!userMail?.includes('@') || !confirmUserMail?.includes('@')){
+        if(!signupEmail?.includes('@')){
             setEmailWarning(true)
         }
 
-        if(userMail!=confirmUserMail){
-            console.log('mail no coincide')
+        if(signupEmail!==signupConfirmEmail){
             setMatchemailWarning(true)
         }
 
-        if(userAge<1){
+        if(signupAge<1){
             setAgeWarning(true)
         }
 
-        if(userName?.startsWith(' ')){
+        if(signupName?.startsWith(' ')){
             setNameWarning(true)
         }
 
-        if(!userName || !userAge || !userMail || !userPassword || !confirmUserMail || !confirmUserPassword){
+        if(!signupName || !signupAge || !signupEmail || !signupPassword || !signupConfirmEmail || !signupConfirmPassword){
             setInputEmpty(true)
         }
 
-        if(!userName?.startsWith(' ') && userName && userAge>0 && userMail && userMail===confirmUserMail && passwordLength>=8 && userPassword===confirmUserPassword){
+        if(!signupName?.startsWith(' ') && signupName && signupAge>0 && signupEmail && signupEmail===signupConfirmEmail && passwordLength>=8 && signupPassword===signupConfirmPassword){
             dispatch(newUser({
-                username:userName,
-                userage:userAge,
-                usermail:userMail,
-                userpassword:userPassword
+                username:signupName,
+                userage:signupAge,
+                usermail:signupEmail,
+                userpassword:signupPassword
             }))
 
             setConfirmSignUp(true)
@@ -90,26 +90,26 @@ const SignUp=()=>{
                 <form>
 
                     <label>Name</label>
-                    <input type="text" onChange={(e)=>setUserName(e.target.value)} required/>
+                    <input id="signup-name" type="text" required/>
                     {nameWarning && <p style={{color:'red'}}>Name is not valid</p>}
 
                     <label>Age</label>
-                    <input type="number" onChange={(e)=>setUserAge(e.target.value)} required/>
+                    <input id="signup-age" type="number" required/>
                     {ageWarning && <p style={{color:'red'}}>Age is not valid</p>}
 
                     <label>Email</label>
-                    <input type="email" placeholder="example@example.com" onChange={(e)=>setUserMail(e.target.value)} required/>
+                    <input id="signup-email" type="email" placeholder="example@example.com" required/>
 
                     <label>Confirm email</label>
-                    <input type="email" placeholder="example@example.com" onChange={(e)=>setConfirmUserMail(e.target.value)} required/>
+                    <input id="signup-confirm-email" type="email" placeholder="example@example.com" required/>
                     {emailWarning && <p style={{color:'red'}}>Email is not valid</p>}
                     {emailMatchWarning && <p style={{color:'red'}}>Email do not match</p>}
 
                     <label>Password</label>
-                    <input type="password" minLength="8" onChange={(e)=>setUserPassword(e.target.value)} required/>
+                    <input id="signup-password" type="password" minLength="8" required/>
 
                     <label>Confirm password</label>
-                    <input type="password" minLength="8" onChange={(e)=>setConfirmUserPassword(e.target.value)} required/>
+                    <input id="signup-confirm-password" type="password" minLength="8" required/>
                     {passwordWarning && <p style={{color:'red'}}>Password needs to be 8 characters or more</p>}
                     {passwordMatchWarning && <p style={{color:'red'}}>Password do not match</p>}
 

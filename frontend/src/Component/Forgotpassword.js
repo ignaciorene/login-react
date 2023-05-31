@@ -5,12 +5,14 @@ const ForgotPassword = ()=>{
 
     const correctMail='ignacio@gmail.com'
     
-    const [userEmail,setUserEmail]=useState()
     const [emailWarning,setEmailWarning]=useState(false)
     const [confirmedEmail,setConfirmedEmail]=useState(false)
 
     const submitRequest=()=>{
-        if(userEmail!=correctMail){
+
+        const inputEmail=document.getElementById('forgotpassword-email').value
+
+        if(inputEmail!==correctMail){
             console.log('mail no registrado')
             setEmailWarning(true)
         }else{
@@ -25,7 +27,7 @@ const ForgotPassword = ()=>{
                     <div>Change your password</div>
                     <form>
                         <label>Enter your mail</label>
-                        <input type="email" placeholder="example@example.com" onChange={(e)=>setUserEmail(e.target.value)} required/>
+                        <input id="forgotpassword-email" type="email" placeholder="example@example.com" required/>
                         {emailWarning && <p style={{color:'red'}}>This email is not registered</p>}
 
                         <button type="submit" onClick={submitRequest}>Submit request</button>

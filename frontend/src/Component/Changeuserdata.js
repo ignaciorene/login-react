@@ -7,13 +7,6 @@ import Login from "./Login";
 
 const ChangeUserData=()=>{
 
-    const [newUserName,setNewUserName]=useState()
-    const [newUserAge,setNewUserAge]=useState()
-    const [newUserMail,setNewUserMail]=useState()
-    const [newConfirmUserMail,setNewConfirmUserMail]=useState()
-    const [newUserPassword,setNewUserPassword]=useState()
-    const [newConfirmUserPassword,setNewConfirmUserPassword]=useState()
-
     //This states are use in the style of the warnings, that will show up when user leaves empty inputs or information is wrong
     const [emailWarning,setEmailWarning]=useState(false)
     const [emailMatchWarning,setEmailMatchWarning]=useState(false)
@@ -35,6 +28,13 @@ const ChangeUserData=()=>{
     const changeUserData=(e)=>{
         e.preventDefault()
 
+        const changeName=document.getElementById('change-name').value
+        const changeAge=document.getElementById('change-age').value
+        const changeEmail=document.getElementById('change-email').value
+        const changeEmailConfirm=document.getElementById('change-email-confirm').value
+        const changePassword=document.getElementById('change-password').value
+        const changePasswordConfirm=document.getElementById('change-password-confirm').value
+
         setEmailWarning(false)
         setEmailMatchWarning(false)
         setPasswordMatchWarning(false)
@@ -44,46 +44,42 @@ const ChangeUserData=()=>{
         setInputEmpty(false)
 
 
-        const passwordLength=newUserPassword?.length
+        const passwordLength=changePassword?.length
 
         if(passwordLength<8 || passwordLength==null){
-            console.log('contrasena es corta')
             setPasswordWarning(true)
         }
 
-        if(newUserPassword!=newConfirmUserPassword){
-            console.log('contrasena no coincide')
+        if(changePassword!==changePasswordConfirm){
             setPasswordMatchWarning(true)
         }
 
-        if(newUserMail!=newConfirmUserMail){
-            console.log('mail no coincide')
+        if(changeEmail!==changeEmailConfirm){
             setEmailMatchWarning(true)
         }
 
-        if(!newUserMail?.includes('@') || !newConfirmUserMail?.includes('@')){
-            console.log('mail no tiene @')
+        if(!changeEmail?.includes('@')){
             setEmailWarning(true)
         }
 
-        if(newUserAge<1){
+        if(changeAge<1){
             setAgeWarning(true)
         }
 
-        if(newUserName?.startsWith(' ')){
+        if(changeName?.startsWith(' ')){
             setNameWarning(true)
         }
 
-        if(!newUserName || !newConfirmUserMail || !newUserAge || !newUserPassword || !newConfirmUserMail || !newConfirmUserPassword){
+        if(!changeName || !changeAge || !changeEmail || !changeEmailConfirm || !changePassword || !changePasswordConfirm){
             setInputEmpty(true)
         }
 
-        if(passwordLength>=8 && newUserPassword===newConfirmUserPassword && newUserMail && newUserMail===newConfirmUserMail && newUserAge>0 && !newUserName?.startsWith(' ') && newUserName){
+        if(passwordLength>=8 && changePassword===changePasswordConfirm && changeEmail && changeEmail===changeEmailConfirm && changeAge>0 && !changeName?.startsWith(' ') && changeName){
             dispatch(changeUser({
-                username:newUserName,
-                userage:newUserAge,
-                usermail:newUserMail,
-                userpassword:newUserPassword
+                username:changeName,
+                userage:changeAge,
+                usermail:changeEmail,
+                userpassword:changePassword
             }))
 
             navigate('/Main')
@@ -99,26 +95,26 @@ const ChangeUserData=()=>{
                     <form>
 
                         <label>Name</label>
-                        <input type="text" onChange={(e)=>setNewUserName(e.target.value)} required/>
+                        <input id="change-name" type="text" required/>
                         {nameWarning && <p style={{color:'red'}}>Name is not valid</p>}
 
                         <label>Age</label>
-                        <input type="number" onChange={(e)=>setNewUserAge(e.target.value)} required/>
+                        <input id="change-age" type="number" required/>
                         {ageWarning && <p style={{color:'red'}}>Age is not valid</p>}
 
                         <label>Email</label>
-                        <input type="email" placeholder="example@example.com" onChange={(e)=>setNewUserMail(e.target.value)} required/>
+                        <input id="change-email" type="email" placeholder="example@example.com" required/>
 
                         <label>Confirm email</label>
-                        <input type="email" placeholder="example@example.com" onChange={(e)=>setNewConfirmUserMail(e.target.value)} required/>
+                        <input id="change-email-confirm" type="email" placeholder="example@example.com" required/>
                         {emailMatchWarning && <p style={{color:'red'}}>Email do not match</p>}
                         {emailWarning && <p style={{color:'red'}}>Email is not valid</p>}
 
                         <label>Password</label>
-                        <input type="password" minLength="8" onChange={(e)=>setNewUserPassword(e.target.value)} required/>
+                        <input id="change-password" type="password" minLength="8" required/>
 
                         <label>Confirm password</label>
-                        <input type="password" minLength="8" onChange={(e)=>setNewConfirmUserPassword(e.target.value)} required/>
+                        <input id="change-password-confirm" type="password" minLength="8" required/>
                         {passwordWarning && <p style={{color:'red'}}>Password needs to be 8 characters or more</p>}
                         {passwordMatchWarning && <p style={{color:'red'}}>Password do not match</p>}
 
