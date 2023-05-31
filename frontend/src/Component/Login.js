@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { login, reset } from "../reducer/userReducer";
+import { login } from "../reducer/userReducer";
 import Spinner from "./Spinner";
 
 const Login=()=>{
@@ -10,9 +10,10 @@ const Login=()=>{
     const dispatch=useDispatch()
     const navigate = useNavigate(); // Hook to access navigation history
 
+    //Bring data from reducer
     const {user, isLoading,isSuccess,isError,message}=useSelector((state)=>state.userData)
 
-
+    //Handle the changes on reducer data and backend request
     useEffect(()=>{
         if(isError){
             alert(message)
@@ -47,6 +48,7 @@ const Login=()=>{
         
     }
 
+    //While is loading show this
     if(isLoading){
         return <Spinner />
     }

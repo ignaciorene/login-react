@@ -1,7 +1,6 @@
 import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { changeUser } from "../reducer/userReducer";
 import { Link } from "react-router-dom";
 
 const NewPassword = ()=>{
@@ -22,19 +21,15 @@ const NewPassword = ()=>{
         const passwordLength=userPassword?.length
 
         if(passwordLength<8 || passwordLength==null){
-            console.log('contrasena corta')
             setPasswordWarning(true)
         }
 
-        if(userPassword!=confirmUserPassword){
-            console.log('contrasena no coincide')
+        if(userPassword!==confirmUserPassword){
             setMatchpasswordWarning(true)
         }
 
         if(userPassword===confirmUserPassword && passwordLength>=8){
-            dispatch(changeUser({
-                userpassword:userPassword
-            }))
+            dispatch()
             setNewPasswordConfirmed(true)
         }
 

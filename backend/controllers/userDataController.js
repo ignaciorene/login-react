@@ -37,15 +37,8 @@ const loginUser= asyncHandler(async (req, res)=>{
 // @route GET /api/userdata/getuser
 // @access Private
 const getUserData= asyncHandler(async (req, res)=>{
-    const {_id, username,userage,usermail,validuser}=await User.findById(req.user.id)
 
-    res.status(200).json({
-        id:_id,
-        username,
-        userage,
-        usermail,
-        validuser
-    })
+    res.status(200).json(req.user)
 })
 
 // Set user data

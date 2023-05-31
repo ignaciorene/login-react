@@ -24,6 +24,31 @@ export const login = createAsyncThunk('userdata/login', async (user, thunkAPI)=>
     }
 })
 
+//Delete user
+export const deleteUser =createAsyncThunk('userdata/deleteuser/', async (id, thunkAPI)=>{
+    try{
+        const token = thunkAPI.getState().userData.user.token
+
+        return await authService.deleteUser(id, token)
+    }catch(error){
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+//Update user
+export const update =createAsyncThunk('userdata/updateuser/', async (user, thunkAPI)=>{
+    try{
+        const token = thunkAPI.getState().userData.user.token
+        const id=thunkAPI.getState().userData.user._id
+
+        return await authService.update(user,id, token)
+    }catch(error){
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
 //Logout
 export const logout=createAsyncThunk('userdata/logout', async ()=>{
     await authService.logout()
@@ -39,18 +64,6 @@ export const userDataSlice = createSlice({
         message:''
     },
     reducers:{
-        newUser: (state,action)=>{
-        },
-        changeUser: (state,action)=>{
-        },
-        deleteUser: (state)=>{
-            state.user=null
-            state.user = null
-            state.isError=false
-            state.isLoading=false
-            state.isSuccess=false
-            state.message=''
-        },
         reset: (state)=>{
             state.user = null
             state.isError=false
@@ -81,6 +94,7 @@ export const userDataSlice = createSlice({
             .addCase(login.fulfilled, (state,action)=>{
                 state.isLoading=false
                 state.isSuccess=true
+                state.isError=false
                 state.user=action.payload
             })
             .addCase(login.rejected, (state,action)=>{
@@ -89,12 +103,41 @@ export const userDataSlice = createSlice({
                 state.message=action.payload
                 state.user=null
             })
+
+            .addCase(deleteUser.pending, (state)=>{
+                state.isLoading=true
+            })
+            .addCase(deleteUser.fulfilled, (state,action)=>{
+                state.isLoading=false
+                state.isSuccess=true
+                state.user=null
+            })
+            .addCase(deleteUser.rejected, (state,action)=>{
+                state.isLoading=false
+                state.isError=true
+                state.message=action.payload
+            })
+
+            .addCase(update.pending, (state)=>{
+                state.isLoading=true
+            })
+            .addCase(update.fulfilled, (state,action)=>{
+                state.isLoading=false
+                state.isSuccess=true
+                state.user=action.payload
+            })
+            .addCase(update.rejected, (state,action)=>{
+                state.isLoading=false
+                state.isError=true
+                state.message=action.payload
+            })
+
             .addCase(logout.fulfilled, (state)=>{
                 state.user=null
             })
     }
 })
 
-export const {newUser,changeUser,deleteUser,reset}=userDataSlice.actions
+export const {reset}=userDataSlice.actions
 
 export default userDataSlice.reducer

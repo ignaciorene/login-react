@@ -19,8 +19,10 @@ const SignUp=()=>{
 
     const dispatch=useDispatch()
 
+    //Bring data from reducer
     const {user, isLoading, isError, isSuccess, message}=useSelector((state)=>state.userData)
 
+    //Handle the changes on reducer data and backend request
     useEffect(()=>{
         if(isError){
             alert(message)
@@ -85,6 +87,7 @@ const SignUp=()=>{
             setInputEmpty(true)
         }
 
+        //if everything is ok, then dispatch the data
         if(!signupName?.startsWith(' ') && signupName && signupAge>0 && signupEmail && signupEmail===signupConfirmEmail && passwordLength>=8 && signupPassword===signupConfirmPassword){
             const userData={
                 username:signupName,
@@ -99,6 +102,7 @@ const SignUp=()=>{
         
     }
 
+    //while is loading show this
     if(isLoading){
         return <Spinner />
     }

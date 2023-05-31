@@ -1,8 +1,8 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import {deleteUser, reset, logout} from "../reducer/userReducer";
+import { reset, logout, deleteUser} from "../reducer/userReducer";
 
 const Main=()=>{
 
@@ -13,6 +13,16 @@ const Main=()=>{
     //state to open delete menu
     const [deleteConfirmation,setDeleteConfirmation]=useState(false)
 
+    //handle changes in user
+    useEffect(()=>{
+
+        //if user is not login i will send user to login page
+        if(!user){
+            navigate('/Login')
+        }
+        
+    },[user, navigate])
+
     //this brings the confirmation message to delete account
     const deleteAccount=()=>{
         setDeleteConfirmation(true)
@@ -20,7 +30,7 @@ const Main=()=>{
 
     //handle the deletion of user
     const handleDeleteUser=()=>{
-        dispatch(deleteUser())
+        dispatch(deleteUser(user._id))
         navigate('/Login')
     }
 
@@ -66,8 +76,6 @@ const Main=()=>{
 
                     <button onClick={handleLogOut}>Logout</button>
                 </div>
-            
-            {/*!validuser && <Login />*/}
         </>
     )
 }

@@ -1,9 +1,9 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch,useSelector } from "react-redux";
-import { changeUser } from "../reducer/userReducer";
+import { update } from "../reducer/userReducer";
 import { Link, useNavigate } from "react-router-dom";
-import Login from "./Login";
+import Spinner from "./Spinner"
 
 const ChangeUserData=()=>{
 
@@ -15,14 +15,29 @@ const ChangeUserData=()=>{
     const [ageWarning,setAgeWarning]=useState(false)
     const [nameWarning,setNameWarning]=useState(false)
     const [inputEmpty,setInputEmpty]=useState(false)
+    const [existingUser,setExistingUser]=useState(false)
 
     const dispatch=useDispatch()
     const navigate=useNavigate()
 
-    //I bring the data from the Redux store to verifies the user is login
-    const validuser=useSelector((state)=>{
-        return state.userData.validuser
-    })
+    //Bring data from reducer
+    const {user, isLoading,isError, message}=useSelector((state)=>state.userData)
+
+    //handle changes in user
+    useEffect(()=>{
+        setExistingUser(false)
+
+        if(isError){
+            console.log(message)
+            setExistingUser(true)
+        }
+
+        //if user is not login i will send user to login page
+        if(!user){
+            navigate('/Login')
+        }
+
+    },[user, isError, message, navigate])
 
     //Verifies the user inputs, and only changes the user data if everything is OK
     const changeUserData=(e)=>{
@@ -42,6 +57,7 @@ const ChangeUserData=()=>{
         setAgeWarning(false)
         setNameWarning(false)
         setInputEmpty(false)
+        setExistingUser(false)
 
 
         const passwordLength=changePassword?.length
@@ -74,22 +90,27 @@ const ChangeUserData=()=>{
             setInputEmpty(true)
         }
 
-        if(passwordLength>=8 && changePassword===changePasswordConfirm && changeEmail && changeEmail===changeEmailConfirm && changeAge>0 && !changeName?.startsWith(' ') && changeName){
-            dispatch(changeUser({
+        if(passwordLength>=8 && changePassword===changePasswordConfirm && changeEmail && changeEmail===changeEmailConfirm && changeAge>0 && !changeName?.startsWith(' ') && changeName && !isError){
+            const userData={
                 username:changeName,
                 userage:changeAge,
                 usermail:changeEmail,
-                userpassword:changePassword
-            }))
+                userpassword:changePassword,
+                validuser:true
+            }
 
-            navigate('/Main')
+            dispatch(update(userData))
         }
         
+    }
+
+    if(isLoading){
+        return <Spinner />
     }
     
     return(
         <>
-            {validuser && (
+            
                 <div>
                     <div>Change your information</div>
                     <form>
@@ -119,15 +140,16 @@ const ChangeUserData=()=>{
                         {passwordMatchWarning && <p style={{color:'red'}}>Password do not match</p>}
 
                         {inputEmpty && <p style={{color:'red'}}>You need to complete all the information in order to make changes</p>}
+                        
+                        {existingUser && <p style={{color:'red'}}>User email already exists</p>}
 
                         <button type="submit" onClick={changeUserData}>Confirm changes</button>
                         <Link to='/Main'>
-                            <button>Cancel</button>
+                            <button>Return to Menu</button>
                         </Link>
                     </form>
                 </div>
-            )}
-            {!validuser && <Login />}
+        
         </>
     )
 }

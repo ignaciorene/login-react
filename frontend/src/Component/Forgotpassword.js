@@ -1,9 +1,8 @@
 import React from "react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const ForgotPassword = ()=>{
-
-    const correctMail='ignacio@gmail.com'
     
     const [emailWarning,setEmailWarning]=useState(false)
     const [confirmedEmail,setConfirmedEmail]=useState(false)
@@ -12,8 +11,7 @@ const ForgotPassword = ()=>{
 
         const inputEmail=document.getElementById('forgotpassword-email').value
 
-        if(inputEmail!==correctMail){
-            console.log('mail no registrado')
+        if(inputEmail!=='correctMail'){
             setEmailWarning(true)
         }else{
             setConfirmedEmail(true)
@@ -25,6 +23,7 @@ const ForgotPassword = ()=>{
             {!confirmedEmail && (
                 <div>
                     <div>Change your password</div>
+                    <div>FEATURE UNAVAILABLE</div>
                     <form>
                         <label>Enter your mail</label>
                         <input id="forgotpassword-email" type="email" placeholder="example@example.com" required/>
@@ -37,6 +36,10 @@ const ForgotPassword = ()=>{
             {confirmedEmail && (
                 <div>
                     <div>We have send you the instructions to change your password at your email!</div>
+                    <div>Note: this feature is not available at the moment, just press the next button in order to change the password. Yeah, i know! is not very secure this way but this is just a practice to learn</div>
+                    <Link to='/Newpassword'>
+                        <button>Next</button>
+                    </Link>
                 </div>
             )}
 

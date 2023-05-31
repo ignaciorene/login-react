@@ -5,6 +5,7 @@ import SignUp from './Component/Signup';
 import Main from './Component/Main';
 import ChangeUserData from './Component/Changeuserdata'
 import ForgotPassword from './Component/Forgotpassword';
+import NewPassword from './Component/NewPassword';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path='/Signup' element={<SignUp />}/>
           <Route path='/Changeuserdata' element={<ChangeUserData />} />
           <Route path='/Forgotpassword' element={<ForgotPassword />} />
+          <Route path='/Newpassword' element={<NewPassword />} />
           <Route path='/Main' element={<Main />} />
         </Routes>
       </div>
