@@ -1,19 +1,29 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { newUser } from "../reducer/userReducer";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { login, reset } from "../reducer/userReducer";
+import Spinner from "./Spinner";
 
 const Login=()=>{
 
     const dispatch=useDispatch()
     const navigate = useNavigate(); // Hook to access navigation history
 
-    //example data TODO: replace with database
-    const correctName='Ignacio'
-    const correctAge=21
-    const correctEmail='ignacio@gmail.com'
-    const correctPassword='12345'
+    const {user, isLoading,isSuccess,isError,message}=useSelector((state)=>state.userData)
+
+
+    useEffect(()=>{
+        if(isError){
+            alert(message)
+        }
+
+        if(isSuccess){
+            navigate('/Main')
+        }
+
+
+    },[user,isError,isSuccess,message,dispatch])
 
     //This states are use in case of error of the inputs
     const [emailWarningStyle,setEmailWarningStyle]=useState(false)
@@ -29,26 +39,16 @@ const Login=()=>{
         setEmailWarningStyle(false)
         setPasswordWarningStyle(false)
 
-        if(loginPassword!==correctPassword){
-            setPasswordWarningStyle(true)
+        const userData={
+            usermail:loginEmail,
+            userpassword: loginPassword
         }
-
-        if(loginEmail!==correctEmail){
-            setEmailWarningStyle(true)
-        }
-
-        if(loginPassword===correctPassword && loginEmail===correctEmail){
-            console.log('usuario y contrasena correctos')
-            dispatch(newUser({
-                username:correctName,
-                userage:correctAge,
-                usermail:correctEmail,
-                userpassword:correctPassword
-            }))
-
-            navigate('/Main') // redirect the user to '/Main'
-        }
+        dispatch(login(userData))
         
+    }
+
+    if(isLoading){
+        return <Spinner />
     }
 
     return(

@@ -1,8 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import {newUser} from "../reducer/userReducer";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {register, reset} from "../reducer/userReducer";
+import Spinner from "./Spinner";
 
 const SignUp=()=>{
 
@@ -17,6 +18,22 @@ const SignUp=()=>{
     const [inputEmpty,setInputEmpty]=useState(false)
 
     const dispatch=useDispatch()
+
+    const {user, isLoading, isError, isSuccess, message}=useSelector((state)=>state.userData)
+
+    useEffect(()=>{
+        if(isError){
+            alert(message)
+            setConfirmSignUp(false)
+        }
+
+        if(isSuccess){
+            setConfirmSignUp(true)
+        }
+
+        dispatch(reset())
+
+    },[user,isError,isSuccess,message,dispatch])
 
     //Verifies inputs and signup user if data is valid
     const createNewUser=(e)=>{
@@ -69,17 +86,21 @@ const SignUp=()=>{
         }
 
         if(!signupName?.startsWith(' ') && signupName && signupAge>0 && signupEmail && signupEmail===signupConfirmEmail && passwordLength>=8 && signupPassword===signupConfirmPassword){
-            dispatch(newUser({
+            const userData={
                 username:signupName,
                 userage:signupAge,
                 usermail:signupEmail,
-                userpassword:signupPassword
-            }))
-
-            setConfirmSignUp(true)
+                userpassword:signupPassword,
+                validuser:true
+            }
+            dispatch(register(userData))
         }
 
         
+    }
+
+    if(isLoading){
+        return <Spinner />
     }
 
     return(

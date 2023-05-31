@@ -21,7 +21,7 @@ const ChangeUserData=()=>{
 
     //I bring the data from the Redux store to verifies the user is login
     const validuser=useSelector((state)=>{
-        return state.login.validuser
+        return state.userData.validuser
     })
 
     //Verifies the user inputs, and only changes the user data if everything is OK

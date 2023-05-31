@@ -2,30 +2,16 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import {deleteUser} from "../reducer/userReducer";
-import Login from "./Login";
+import {deleteUser, reset, logout} from "../reducer/userReducer";
 
 const Main=()=>{
 
     const dispatch=useDispatch()
     const navigate=useNavigate()
+    const {user}=useSelector((state)=> state.userData)
 
     //state to open delete menu
     const [deleteConfirmation,setDeleteConfirmation]=useState(false)
-    
-    //Bring from the store of redux all the data of the user
-    const username=useSelector((state)=>{
-        return state.login.username
-    })
-    const userage=useSelector((state)=>{
-        return state.login.userage
-    })
-    const usermail=useSelector((state)=>{
-        return state.login.usermail
-    })
-    const validuser=useSelector((state)=>{
-        return state.login.validuser
-    })
 
     //this brings the confirmation message to delete account
     const deleteAccount=()=>{
@@ -43,21 +29,22 @@ const Main=()=>{
     }
 
     //When user signs out
-    const handleSignOut=()=>{
-        dispatch(deleteUser())
+    const handleLogOut=()=>{
+        dispatch(logout())
+        dispatch(reset())
 
         navigate('/Login')
     }
 
     return(
         <>
-            {validuser && (
+            
                 <div>
                     <div>MAIN</div>
 
-                    <div>nombre: {username}</div>
-                    <div>edad: {userage}</div>
-                    <div>email: {usermail}</div>
+                    <div>nombre: {user?.username}</div>
+                    <div>edad: {user?.userage}</div>
+                    <div>email: {user?.usermail}</div>
 
                     <div>Change your data</div>
                     <Link to='/Changeuserdata'>
@@ -77,10 +64,10 @@ const Main=()=>{
                         <button onClick={deleteAccount}>Delete account</button>
                     )}
 
-                    <button onClick={handleSignOut}>Sign Out</button>
+                    <button onClick={handleLogOut}>Logout</button>
                 </div>
-            )}
-            {!validuser && <Login />}
+            
+            {/*!validuser && <Login />*/}
         </>
     )
 }

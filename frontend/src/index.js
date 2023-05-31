@@ -10,7 +10,7 @@ import userDataSlice  from './reducer/userReducer';
 
 const store = configureStore({
     reducer:{
-      login:userDataSlice
+      userData:userDataSlice
     }
 })
 
