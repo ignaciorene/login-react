@@ -6,12 +6,13 @@ import Main from './Component/Main';
 import ChangeUserData from './Component/Changeuserdata'
 import ForgotPassword from './Component/Forgotpassword';
 import NewPassword from './Component/NewPassword';
+import Spinner from './Component/Spinner';
 
 function App() {
   return (
-    <>
+    <div>
       <div className='title-container'>
-        <h1 className='title'>LOGIN PRACTICE</h1>
+        <h1>LOGIN PRACTICE</h1>
       </div>
       <div className='main-container'>
         <Routes>
@@ -24,7 +25,7 @@ function App() {
           <Route path='/Main' element={<Main />} />
         </Routes>
       </div>
-    </>
+    </div>
   );
 }
 

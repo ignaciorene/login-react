@@ -49,32 +49,50 @@ const Main=()=>{
     return(
         <>
             
-                <div>
-                    <div>MAIN</div>
+                <div className="main-container">
+                    <div className="main-box">
+                        <div className="main-box-title">USER DATA</div>
 
-                    <div>nombre: {user?.username}</div>
-                    <div>edad: {user?.userage}</div>
-                    <div>email: {user?.usermail}</div>
+                        <div className="main-box-content">
+                            <div className="main-box-content-container">
+                                <div className="main-box-content-title">nombre:</div> 
+                                <div className="main-box-content-result">{user?.username}</div>
+                            </div>
+                            
+                            <div className="main-box-content-container">
+                                <div className="main-box-content-title">edad:</div>
+                                <div className="main-box-content-result">{user?.userage}</div>
+                            </div>
 
-                    <div>Change your data</div>
-                    <Link to='/Changeuserdata'>
-                        <button>Change data</button>
-                    </Link>
-
-                    <div>Delete account</div>
-
-                    {deleteConfirmation && (
-                        <div>
-                        <p>Are you sure to delete the user?</p>
-                        <button onClick={handleDeleteUser}>Yes, delete user</button>
-                        <button onClick={handleCancelDelete}>Cancel</button>
+                            <div className="main-box-content-container">
+                                <div className="main-box-content-title">email:</div>
+                                <div className="main-box-content-result">{user?.usermail}</div>
+                            </div>
+                            
                         </div>
-                    )}
-                    {!deleteConfirmation && (
-                        <button onClick={deleteAccount}>Delete account</button>
-                    )}
+            
+                    </div>
+                    
+                        <Link to='/Changeuserdata'>
+                            <button>Change data</button>
+                        </Link>
 
                     <button onClick={handleLogOut}>Logout</button>
+
+                    {!deleteConfirmation && (
+                            <button onClick={deleteAccount}>Delete account</button>
+                        )}
+
+                    <div className="main-box">
+                        {deleteConfirmation && (
+                            <div>
+                            <p>Are you sure to delete the user?</p>
+                            <button onClick={handleDeleteUser}>Yes, delete user</button>
+                            <button onClick={handleCancelDelete}>Cancel</button>
+                            </div>
+                        )}
+                    </div>
+                    
                 </div>
         </>
     )

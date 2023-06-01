@@ -1,11 +1,23 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import Spinner from "./Spinner";
 
 const ForgotPassword = ()=>{
     
     const [emailWarning,setEmailWarning]=useState(false)
     const [confirmedEmail,setConfirmedEmail]=useState(false)
+
+    //Bring data from reducer
+    const {user, isLoading,isSuccess,isError,message}=useSelector((state)=>state.userData)
+
+    useEffect(()=>{
+        if(isError){
+            console.log(message)
+            setEmailWarning()
+        }
+    },[user,isError,message])
 
     const submitRequest=()=>{
 
@@ -18,6 +30,10 @@ const ForgotPassword = ()=>{
         }
     }
 
+    if(isLoading){
+        return <Spinner />
+    }
+    
     return(
         <>
             {!confirmedEmail && (

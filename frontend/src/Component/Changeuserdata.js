@@ -100,6 +100,7 @@ const ChangeUserData=()=>{
             }
 
             dispatch(update(userData))
+
         }
         
     }
@@ -111,34 +112,48 @@ const ChangeUserData=()=>{
     return(
         <>
             
-                <div>
-                    <div>Change your information</div>
+                <div className="main-container">
+                    
                     <form>
+                        <div className="form-title">Change user information</div>
 
-                        <label>Name</label>
-                        <input id="change-name" type="text" required/>
-                        {nameWarning && <p style={{color:'red'}}>Name is not valid</p>}
+                        <div className="form-group">
+                            <label>Name</label>
+                            <input id="change-name" type="text" required/>
+                            {nameWarning && <p style={{color:'red'}}>Name is not valid</p>}
+                        </div>
 
-                        <label>Age</label>
-                        <input id="change-age" type="number" required/>
-                        {ageWarning && <p style={{color:'red'}}>Age is not valid</p>}
+                        <div className="form-group">
+                            <label>Age</label>
+                            <input id="change-age" type="number" required/>
+                            {ageWarning && <p style={{color:'red'}}>Age is not valid</p>}
+                        </div>
 
-                        <label>Email</label>
-                        <input id="change-email" type="email" placeholder="example@example.com" required/>
+                        <div className="form-group">
+                            <label>Email</label>
+                            <input id="change-email" type="email" placeholder="example@example.com" required/>
+                        </div>
 
-                        <label>Confirm email</label>
-                        <input id="change-email-confirm" type="email" placeholder="example@example.com" required/>
-                        {emailMatchWarning && <p style={{color:'red'}}>Email do not match</p>}
-                        {emailWarning && <p style={{color:'red'}}>Email is not valid</p>}
+                        <div className="form-group">
+                            <label>Confirm email</label>
+                            <input id="change-email-confirm" type="email" placeholder="example@example.com" required/>
+                            {emailMatchWarning && <p style={{color:'red'}}>Email do not match</p>}
+                            {emailWarning && <p style={{color:'red'}}>Email is not valid</p>}
+                        </div>
 
-                        <label>Password</label>
-                        <input id="change-password" type="password" minLength="8" required/>
+                        <div className="form-group">
+                            <label>Password</label>
+                            <input id="change-password" type="password" minLength="8" required/>
+                        </div>
 
-                        <label>Confirm password</label>
-                        <input id="change-password-confirm" type="password" minLength="8" required/>
+                        <div className="form-group">
+                            <label>Confirm password</label>
+                            <input id="change-password-confirm" type="password" minLength="8" required/>
+                        </div>
+
                         {passwordWarning && <p style={{color:'red'}}>Password needs to be 8 characters or more</p>}
                         {passwordMatchWarning && <p style={{color:'red'}}>Password do not match</p>}
-
+                        
                         {inputEmpty && <p style={{color:'red'}}>You need to complete all the information in order to make changes</p>}
                         
                         {existingUser && <p style={{color:'red'}}>User email already exists</p>}

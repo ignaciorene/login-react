@@ -110,34 +110,45 @@ const SignUp=()=>{
     return(
         <>
         {!confirmSignUp && (
-            <div>
-                <div>Sign Up</div>
+            <div className="main-container">
                 <form>
+                    <div className="form-title">Sign Up</div>
 
-                    <label>Name</label>
-                    <input id="signup-name" type="text" required/>
-                    {nameWarning && <p style={{color:'red'}}>Name is not valid</p>}
+                    <div className="form-group">
+                        <label>Name</label>
+                        <input id="signup-name" type="text" required/>
+                        {nameWarning && <p style={{color:'red'}}>Name is not valid</p>}
+                    </div>
 
-                    <label>Age</label>
-                    <input id="signup-age" type="number" required/>
-                    {ageWarning && <p style={{color:'red'}}>Age is not valid</p>}
+                    <div className="form-group">
+                        <label>Age</label>
+                        <input id="signup-age" type="number" required/>
+                        {ageWarning && <p style={{color:'red'}}>Age is not valid</p>}
+                    </div>
 
-                    <label>Email</label>
-                    <input id="signup-email" type="email" placeholder="example@example.com" required/>
+                    <div className="form-group">
+                        <label>Email</label>
+                        <input id="signup-email" type="email" placeholder="example@example.com" required/>
+                    </div>
 
-                    <label>Confirm email</label>
-                    <input id="signup-confirm-email" type="email" placeholder="example@example.com" required/>
-                    {emailWarning && <p style={{color:'red'}}>Email is not valid</p>}
-                    {emailMatchWarning && <p style={{color:'red'}}>Email do not match</p>}
+                    <div className="form-group">
+                        <label>Confirm email</label>
+                        <input id="signup-confirm-email" type="email" placeholder="example@example.com" required/>
+                        {emailWarning && <p style={{color:'red'}}>Email is not valid</p>}
+                        {emailMatchWarning && <p style={{color:'red'}}>Email do not match</p>}
+                    </div>
 
-                    <label>Password</label>
-                    <input id="signup-password" type="password" minLength="8" required/>
+                    <div className="form-group">
+                        <label>Password</label>
+                        <input id="signup-password" type="password" minLength="8" required/>
+                    </div>
 
+                    <div className="form-group">
                     <label>Confirm password</label>
-                    <input id="signup-confirm-password" type="password" minLength="8" required/>
+                        <input id="signup-confirm-password" type="password" minLength="8" required/>
+                    </div>
                     {passwordWarning && <p style={{color:'red'}}>Password needs to be 8 characters or more</p>}
                     {passwordMatchWarning && <p style={{color:'red'}}>Password do not match</p>}
-
                     {inputEmpty && <p style={{color:'red'}}>You need to complete all the information in order to sign up</p>}
 
                     <button type="submit" onClick={createNewUser}>Sign Up</button>
@@ -150,7 +161,7 @@ const SignUp=()=>{
             </div>
         )}
         {confirmSignUp && (
-            <div>
+            <div className="main-container">
                 <div>WELCOME!</div>
                 <div>We have send you instructions to confirm your register at your email! </div>
                 <Link to='/Login'>
