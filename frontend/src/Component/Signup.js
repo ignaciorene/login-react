@@ -117,13 +117,13 @@ const SignUp=()=>{
                     <div className="form-group">
                         <label>Name</label>
                         <input id="signup-name" type="text" required/>
-                        {nameWarning && <p style={{color:'red'}}>Name is not valid</p>}
+                        {nameWarning && <p  >Name is not valid</p>}
                     </div>
 
                     <div className="form-group">
                         <label>Age</label>
                         <input id="signup-age" type="number" required/>
-                        {ageWarning && <p style={{color:'red'}}>Age is not valid</p>}
+                        {ageWarning && <p  >Age is not valid</p>}
                     </div>
 
                     <div className="form-group">
@@ -134,8 +134,8 @@ const SignUp=()=>{
                     <div className="form-group">
                         <label>Confirm email</label>
                         <input id="signup-confirm-email" type="email" placeholder="example@example.com" required/>
-                        {emailWarning && <p style={{color:'red'}}>Email is not valid</p>}
-                        {emailMatchWarning && <p style={{color:'red'}}>Email do not match</p>}
+                        {emailWarning && <p  >Email is not valid</p>}
+                        {emailMatchWarning && <p  >Email do not match</p>}
                     </div>
 
                     <div className="form-group">
@@ -147,9 +147,9 @@ const SignUp=()=>{
                     <label>Confirm password</label>
                         <input id="signup-confirm-password" type="password" minLength="8" required/>
                     </div>
-                    {passwordWarning && <p style={{color:'red'}}>Password needs to be 8 characters or more</p>}
-                    {passwordMatchWarning && <p style={{color:'red'}}>Password do not match</p>}
-                    {inputEmpty && <p style={{color:'red'}}>You need to complete all the information in order to sign up</p>}
+                    {passwordWarning && <p  >Password needs to be 8 characters or more</p>}
+                    {passwordMatchWarning && <p  >Password do not match</p>}
+                    {inputEmpty && <p  >You need to complete all the information in order to sign up</p>}
 
                     <button type="submit" onClick={createNewUser}>Sign Up</button>
                 </form>

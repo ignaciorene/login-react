@@ -16,20 +16,25 @@ const ChangeUserData=()=>{
     const [nameWarning,setNameWarning]=useState(false)
     const [inputEmpty,setInputEmpty]=useState(false)
     const [existingUser,setExistingUser]=useState(false)
+    const [successMessage,setSuccessMessage]=useState(false)
 
     const dispatch=useDispatch()
     const navigate=useNavigate()
 
     //Bring data from reducer
-    const {user, isLoading,isError, message}=useSelector((state)=>state.userData)
+    const {user, isLoading, isSuccess,isError, message}=useSelector((state)=>state.userData)
 
     //handle changes in user
     useEffect(()=>{
-        setExistingUser(false)
+
+        if(isSuccess){
+            setExistingUser(false)
+            setSuccessMessage(true)
+        }
 
         if(isError){
-            console.log(message)
             setExistingUser(true)
+            setSuccessMessage(false)
         }
 
         //if user is not login i will send user to login page
@@ -37,7 +42,7 @@ const ChangeUserData=()=>{
             navigate('/Login')
         }
 
-    },[user, isError, message, navigate])
+    },[user, isError,isSuccess,message, navigate])
 
     //Verifies the user inputs, and only changes the user data if everything is OK
     const changeUserData=(e)=>{
@@ -56,8 +61,6 @@ const ChangeUserData=()=>{
         setPasswordWarning(false)
         setAgeWarning(false)
         setNameWarning(false)
-        setInputEmpty(false)
-        setExistingUser(false)
 
 
         const passwordLength=changePassword?.length
@@ -90,7 +93,8 @@ const ChangeUserData=()=>{
             setInputEmpty(true)
         }
 
-        if(passwordLength>=8 && changePassword===changePasswordConfirm && changeEmail && changeEmail===changeEmailConfirm && changeAge>0 && !changeName?.startsWith(' ') && changeName && !isError){
+        if(passwordLength>=8 && changePassword===changePasswordConfirm && changeEmail && changeEmail===changeEmailConfirm && changeAge>0 && !changeName?.startsWith(' ') && changeName){
+            
             const userData={
                 username:changeName,
                 userage:changeAge,
@@ -101,6 +105,8 @@ const ChangeUserData=()=>{
 
             dispatch(update(userData))
 
+            setExistingUser(false)
+
         }
         
     }
@@ -108,7 +114,7 @@ const ChangeUserData=()=>{
     if(isLoading){
         return <Spinner />
     }
-    
+
     return(
         <>
             
@@ -120,13 +126,13 @@ const ChangeUserData=()=>{
                         <div className="form-group">
                             <label>Name</label>
                             <input id="change-name" type="text" required/>
-                            {nameWarning && <p style={{color:'red'}}>Name is not valid</p>}
+                            {nameWarning && <p  >Name is not valid</p>}
                         </div>
 
                         <div className="form-group">
                             <label>Age</label>
                             <input id="change-age" type="number" required/>
-                            {ageWarning && <p style={{color:'red'}}>Age is not valid</p>}
+                            {ageWarning && <p  >Age is not valid</p>}
                         </div>
 
                         <div className="form-group">
@@ -137,8 +143,8 @@ const ChangeUserData=()=>{
                         <div className="form-group">
                             <label>Confirm email</label>
                             <input id="change-email-confirm" type="email" placeholder="example@example.com" required/>
-                            {emailMatchWarning && <p style={{color:'red'}}>Email do not match</p>}
-                            {emailWarning && <p style={{color:'red'}}>Email is not valid</p>}
+                            {emailMatchWarning && <p>Email do not match</p>}
+                            {emailWarning && <p>Email is not valid</p>}
                         </div>
 
                         <div className="form-group">
@@ -151,12 +157,14 @@ const ChangeUserData=()=>{
                             <input id="change-password-confirm" type="password" minLength="8" required/>
                         </div>
 
-                        {passwordWarning && <p style={{color:'red'}}>Password needs to be 8 characters or more</p>}
-                        {passwordMatchWarning && <p style={{color:'red'}}>Password do not match</p>}
+                        {passwordWarning && <p>Password needs to be 8 characters or more</p>}
+                        {passwordMatchWarning && <p  >Password do not match</p>}
                         
-                        {inputEmpty && <p style={{color:'red'}}>You need to complete all the information in order to make changes</p>}
+                        {inputEmpty && <p  >You need to complete all the information in order to make changes</p>}
                         
-                        {existingUser && <p style={{color:'red'}}>User email already exists</p>}
+                        {existingUser && <p  >User email already exists</p>}
+
+                        {successMessage && <p className="form-success" >User information has been updated!</p>}
 
                         <button type="submit" onClick={changeUserData}>Confirm changes</button>
                         <Link to='/Main'>

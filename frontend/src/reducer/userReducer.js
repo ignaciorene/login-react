@@ -122,6 +122,7 @@ export const userDataSlice = createSlice({
                 state.isLoading=true
             })
             .addCase(update.fulfilled, (state,action)=>{
+                state.isError=false
                 state.isLoading=false
                 state.isSuccess=true
                 state.user=action.payload

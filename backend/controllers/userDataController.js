@@ -121,6 +121,7 @@ const updateUserData = asyncHandler(async (req, res) => {
     const hashedPassword = await bcrypt.hash(userpassword, salt);
   
     // Update user
+
     const updateUser = await User.findByIdAndUpdate(
       req.params.id,
       {
@@ -133,7 +134,15 @@ const updateUserData = asyncHandler(async (req, res) => {
       { new: true } // return the updated user
     );
   
-    res.status(200).json(updateUser);
+    res.status(200).json({
+      _id: user.id,
+      username: username,
+      userage: userage,
+      usermail: usermail,
+      validuser:validuser,
+      token: generateToken(user._id)
+    });
+
   });  
 
 // delete user data

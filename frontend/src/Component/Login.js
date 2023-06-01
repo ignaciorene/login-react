@@ -26,7 +26,7 @@ const Login=()=>{
             navigate('/Main')
         }
 
-    },[user,isError,isSuccess,message,dispatch])
+    },[user,isError,isSuccess,message,dispatch,navigate])
 
     //Verifies the user inputs, and only access the Main component if all data is OK
     const submitLogin=(e)=>{
@@ -58,12 +58,12 @@ const Login=()=>{
                 <div className="form-group">
                 <label>Mail</label>
                     <input id="login-email" type="email" placeholder="example@example.com" required/>
-                    {emailWarningStyle && <p style={{color:'red'}}>Email is not registered</p>}
+                    {emailWarningStyle && <p>Email is not registered</p>}
                 </div>
                 <div className="form-group">
                     <label>Password</label>
                     <input id="login-password" type="password" required/>
-                    {passwordWarningStyle && <p style={{color:'red'}}>Password is incorrect</p>}
+                    {passwordWarningStyle && <p>Password is incorrect</p>}
                 </div>
                 
                 <Link to='/Main'>
@@ -72,7 +72,7 @@ const Login=()=>{
             </form>
             <div className="login-subform">
                 <Link to='/'>
-                    <p>Forgot password? create new password here...</p>
+                    <p>Forgot password? create a new one here...</p>
                 </Link>
                 <Link to='/Signup'>
                     <p>Don't have an account? Sign Up here...</p>

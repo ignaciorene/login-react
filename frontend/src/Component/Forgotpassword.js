@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Spinner from "./Spinner";
 
 const ForgotPassword = ()=>{
@@ -10,7 +10,7 @@ const ForgotPassword = ()=>{
     const [confirmedEmail,setConfirmedEmail]=useState(false)
 
     //Bring data from reducer
-    const {user, isLoading,isSuccess,isError,message}=useSelector((state)=>state.userData)
+    const {user, isLoading,isError,message}=useSelector((state)=>state.userData)
 
     useEffect(()=>{
         if(isError){
@@ -43,7 +43,7 @@ const ForgotPassword = ()=>{
                     <form>
                         <label>Enter your mail</label>
                         <input id="forgotpassword-email" type="email" placeholder="example@example.com" required/>
-                        {emailWarning && <p style={{color:'red'}}>This email is not registered</p>}
+                        {emailWarning && <p  >This email is not registered</p>}
 
                         <button type="submit" onClick={submitRequest}>Submit request</button>
                     </form>

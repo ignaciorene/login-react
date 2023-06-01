@@ -46,8 +46,8 @@ const NewPassword = ()=>{
 
                     <label>Confirm new password</label>
                     <input type="password" onChange={(e)=>setConfirmUserPassword(e.target.value)} required />
-                    {passwordWarning && <p style={{color:'red'}}>Password needs to be 8 characters or more</p>}
-                    {passwordMatchWarning && <p style={{color:'red'}}>Passwords do not match</p>}
+                    {passwordWarning && <p  >Password needs to be 8 characters or more</p>}
+                    {passwordMatchWarning && <p  >Passwords do not match</p>}
 
                     <button type="submit" onClick={newPassword}>Change password</button>
                 </form>
