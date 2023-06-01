@@ -85,10 +85,12 @@ const Main=()=>{
 
                     <div className="main-box">
                         {deleteConfirmation && (
-                            <div>
-                            <p>Are you sure to delete the user?</p>
+                            <div className="delete-box">
+                            <h2>Do you want to delete the user?</h2>
+                            <div className="delete-box-buttonContainer">
                             <button onClick={handleDeleteUser}>Yes, delete user</button>
                             <button onClick={handleCancelDelete}>Cancel</button>
+                            </div>
                             </div>
                         )}
                     </div>

@@ -135,3 +135,24 @@ button:hover{
   .main-box-content-title{
     font-weight: 600;
   }
+
+  .delete-box{
+    width: 20rem;
+    height: 15rem;
+    background-color: white;
+    position: absolute;
+    top:6rem;
+    border: 1px solid rgb(65, 65, 187);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .delete-box-buttonContainer{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap:0.5rem;
+  }
