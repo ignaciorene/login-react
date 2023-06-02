@@ -55,17 +55,17 @@ const Main=()=>{
 
                         <div className="main-box-content">
                             <div className="main-box-content-container">
-                                <div className="main-box-content-title">nombre:</div> 
+                                <div className="main-box-content-title">Name:</div> 
                                 <div className="main-box-content-result">{user?.username}</div>
                             </div>
                             
                             <div className="main-box-content-container">
-                                <div className="main-box-content-title">edad:</div>
+                                <div className="main-box-content-title">Age:</div>
                                 <div className="main-box-content-result">{user?.userage}</div>
                             </div>
 
                             <div className="main-box-content-container">
-                                <div className="main-box-content-title">email:</div>
+                                <div className="main-box-content-title">Email:</div>
                                 <div className="main-box-content-result">{user?.usermail}</div>
                             </div>
                             

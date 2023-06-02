@@ -38,6 +38,9 @@ const deleteUser=async (id,token)=>{
 
     const response = await axios.delete(API_URL_DELETE + id,config)
 
+   
+    localStorage.removeItem('user')
+
     return response.data
 }
 

@@ -6,7 +6,6 @@ import Main from './Component/Main';
 import ChangeUserData from './Component/Changeuserdata'
 import ForgotPassword from './Component/Forgotpassword';
 import NewPassword from './Component/NewPassword';
-import Spinner from './Component/Spinner';
 
 function App() {
   return (
